@@ -1,0 +1,81 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<style>
+  html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 90%;
+    width: 100%;
+    background-color: lightblue;
+  
+}
+</style>
+<link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+<script src="https://js.arcgis.com/4.6/"></script>
+
+<script>
+
+var map;
+function func_basemap_sat() {   //this is my attempt to get the satellite button to work
+
+map.basemap="satellite";
+
+}
+
+function func_basemap_str() {   //this is my attempt to get the satellite button to work
+
+map.basemap="streets";
+
+}
+
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "dojo/domReady!"
+], 
+
+
+
+function(Map, MapView) {
+  
+  map = new Map({
+    basemap: "oceans"
+  });
+ var view = new MapView({
+    container: "viewDiv",  // Reference to the DOM node that will contain the view
+    map: map,  
+    zoom: 4,  
+    center: [15, 65] 	
+  });
+});
+//}//close the satellite function
+
+//-----------------------------------------------------------
+
+
+</script>
+
+<title>Nate's Map</title>
+
+
+</head>
+<body>
+
+
+<h1 style="color: black;
+                  font-family: Courier New;
+				  text-align: center;
+                  font-size: 40px;">A New Kind of Interactive Map</h1> 
+        <p stlye="text-align: left;">Nate Lant<br>February 13, 2018
+        </p>
+		<input type="button" value="Satellite" onclick="func_basemap_sat()"><input type="button" value="Streets" onclick="func_basemap_str()">
+<div id="viewDiv"></div>
+
+
+</body>
+
+
+</html>
