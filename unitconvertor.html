@@ -10,6 +10,7 @@ body {
   height: 800px;
   text-align: center; 
   image-opacity: .5;
+  position: relative;
     
 }
 </style>
@@ -18,15 +19,74 @@ body {
 <body>
         <h1 style="color: black;
                    font-family: Courier New;
-                   font-size: 40px;">Convert to Miles per Gallon</h1>
-        <p>No worries across the globe<br>Simply enter in the price per unit volume and compare it what you are most familiar.
+                   font-size: 40px;">Convert to Dollars per Gallon</h1>
+        <p>No worries across the globe.<br>Simply enter in the price per unit volume and compare it what you are most familiar.
         </p>
-    <input type="button" value="new">
+    <input type="button" value="convert" onclick="myFunction()">
+    <input id="currency" type="number" default="Enter currency">
+    <select id="currencytype">
+      <option value="euros">Euros</option> 
+      <option value="brazilian_reais">Brazilian Reais</option>
+      <option value="british_pounds">British Pounds</option>
+</select>
+<br><br>
+<input id="volume" type="number" default="Enter mph">
+    <select id="volumetype"> 
+  <option value="gallon">Gallon</option> 
+  <option value="liter" selected>Liter</option>
+</select>
+<br><br>
+<input id="dpg" type="text" ></input>
       
  
 <!-- convert all gas prices to dollars per gallon -->
 <!-- buttons and drop downs in html? -->
 <!-- how do i do the calculations? -->
+<script>
+function myFunction() { 
+var $ = document.getElementById("currency").value; 
+
+var ele = document.getElementById("currencytype");
+var $type = ele.options[ele.selectedIndex].value;
+
+var v = document.getElementById("volume").value; 
+
+var elem = document.getElementById("volumetype");
+var vtype = elem.options[elem.selectedIndex].value;
+
+var output;
+
+var x ;
+var y;
+
+var $_float = parseFloat($);
+var v_float = parseFloat(v);
+
+if ($type == "euros") { 
+	x = $_float * 1.23;
+	} else if ($type == "brazilian_reais") {
+	x = $_float * .33;
+	} else if ($type == "british_pounds") {
+	x = $_float * 1.38;
+	}
+ 
+//now x is in dollars
+   
+if (vtype == "liter") { 
+    y = v_float * 0.26;
+	} else if (vtype == "gallon") { 
+	y = v_float * 1;
+	}
+   
+output = x / y;
+document.getElementById("dpg").value=output;
+
+}
+</script>
+
+
+<p>***These calculations are based on the currency conversion of February 12, 2018.
+</p>
 
 </body>
 </html>
