@@ -3,6 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
+
+<!-- for pop ups use hover mouse clicks-->
+<!-- what kind of raster data, how to put in on the map-->
+
+
 <style>
   html, body, #viewDiv {
     padding: 0;
@@ -17,6 +22,17 @@
 <script src="https://js.arcgis.com/4.6/"></script>
 
 <script>
+var featureLayer = null
+
+function func_show_roads() {
+	console.log(featureLayer)
+    var checkBox = document.getElementById("View_Roads");
+    if (checkBox.checked == true){
+        featureLayer.visible = true
+    } else {
+       featureLayer.visible = false
+    }
+}
 
 var map;
 function func_basemap_sat() {   //this is my attempt to get the satellite button to work
@@ -34,26 +50,41 @@ map.basemap="streets";
 require([
   "esri/Map",
   "esri/views/MapView",
+   "esri/layers/FeatureLayer",
   "dojo/domReady!"
+ 
 ], 
 
 
 
-function(Map, MapView) {
+function(Map, MapView, FeatureLayer) {
   
   map = new Map({
     basemap: "oceans"
   });
+   featureLayer = new FeatureLayer({
+        url: "http://geoserver2.byu.edu/arcgis/rest/services/TeamWon/natesroads/FeatureServer/0",
+        outFields: ["*"],
+        popupTemplate: template
+      });
+      map.add(featureLayer);
+	  
+	  
  var view = new MapView({
     container: "viewDiv",  // Reference to the DOM node that will contain the view
     map: map,  
-    zoom: 4,  
-    center: [15, 65] 	
+    zoom: 8.5,  
+    center: [-111.3, 40.5] 	
   });
 });
 //}//close the satellite function
 
 //-----------------------------------------------------------
+var template = { // autocasts as new PopupTemplate()
+        title: "Speed Limit on: {ROUTE}",
+        content: "<p>The maximum speed you'll be allowed to travel is {SPEEDLIMIT} mph</p>"
+		};
+		
 
 
 </script>
@@ -72,9 +103,17 @@ function(Map, MapView) {
         <p stlye="text-align: left;">Nate Lant<br>February 13, 2018
         </p>
 		<input type="button" value="Satellite" onclick="func_basemap_sat()"><input type="button" value="Streets" onclick="func_basemap_str()">
-<div id="viewDiv"></div>
+
+<!--checkbox -->		
+		
+  Show Roads:<input type="checkbox" id="View_Roads" onclick="func_show_roads()" checked="true" >
+ 
+		
+		<div id="viewDiv"></div>
+
 
 
 </body>
+
 
 </html>
